@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.model.TodoEntity;
+import org.example.model.TodoModel;
 import org.example.model.TodoRequest;
 import org.example.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -36,11 +35,11 @@ class TodoControllerTest {
     @MockBean
     TodoService todoService;
 
-    private TodoEntity expected;
+    private TodoModel expected;
 
     @BeforeEach
     void setup() {
-        this.expected = new TodoEntity();
+        this.expected = new TodoModel();
         this.expected.setId(123L);
         this.expected.setTitle("TEST TITLE");
         this.expected.setOrder(0L);
@@ -52,7 +51,7 @@ class TodoControllerTest {
         when(this.todoService.add(any(TodoRequest.class)))
                 .then((i) -> {
                     TodoRequest request = i.getArgument(0, TodoRequest.class);
-                    return new TodoEntity(this.expected.getId(), request.getTitle()
+                    return new TodoModel(this.expected.getId(), request.getTitle()
                             , this.expected.getOrder(), this.expected.getCompleted());
                 });
 
@@ -92,10 +91,10 @@ class TodoControllerTest {
 
     @Test
     void readAll() throws Exception {
-        List<TodoEntity> mockList = new ArrayList<>();
+        List<TodoModel> mockList = new ArrayList<>();
         int expectedLength = 10;
         for (int i = 0; i < expectedLength; i++) {
-            mockList.add(mock(TodoEntity.class));
+            mockList.add(mock(TodoModel.class));
         }
 
         given(todoService.searchAll()).willReturn(mockList);
