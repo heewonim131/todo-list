@@ -3,7 +3,7 @@
 간단한 To do List Back-end 단을 구현
 
 개발환경
-- Java, Spring boot
+- Java 11, Spring boot 2.6.3
 - Lombok, Mockito, JPA
 
 기능
